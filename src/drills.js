@@ -8,22 +8,24 @@ const knexInstance = knex({
 
 function getItemsWithText(searchTerm) {
   if (typeof(searchTerm) !== 'string') return console.log('>> WARNING >> please enter a string for the search.');
+
   knexInstance
-    .select('id', `name`, `price`, `date_added`, `checked`, 'category')
+    .select('id', 'name', 'price', 'date_added', 'checked', 'category')
     .from('shopping_list')
     .where('name', 'ILIKE', `%${searchTerm}%`)
     .then(results => {
       console.log(results);
     })
 }
-// getItemsWithText('turnip');
+// getItemsWithText('urni');
 
 function getItemsPaginated(pageNumber) {
   if (typeof(pageNumber) !== 'number') return console.log('>> WARNING >> please enter a page number.');
+  
   const productsPerPage = 6;
   const offset = productsPerPage * (pageNumber - 1);
   knexInstance
-  .select('id', `name`, `price`, `date_added`, `checked`, 'category')
+  .select('*')
   .from('shopping_list')
   .limit(productsPerPage)
   .offset(offset)
@@ -36,9 +38,10 @@ function getItemsPaginated(pageNumber) {
 
 function getItemsAddedSince(days) {
   if (typeof(days) !== 'number') return console.log('>> WARNING >> please enter a number.');
+
   const daysAgo = days + 2; // not sure why this needs an offset
   knexInstance
-  .select('id', `name`, `price`, `date_added`, `checked`, 'category')
+  .select('*')
   // .count('date_added')
   .from('shopping_list')
   .where('date_added', '>', knexInstance.raw(`now() - '?? days'::INTERVAL`, daysAgo))
@@ -50,7 +53,8 @@ function getItemsAddedSince(days) {
 function getCostForCategory() {
   knexInstance
   .select('category')
-  .count('price AS total')
+  // .count('price AS total')
+  .sum('price AS total')
   .from('shopping_list')
   .groupBy('category')
   .then(results => console.log(results))
