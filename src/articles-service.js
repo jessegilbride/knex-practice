@@ -1,6 +1,5 @@
 const ArticlesService = {
   getAllArticles(knex) {
-    // return Promise.resolve('all the articles!')
     return knex.select('*').from('blogful_articles')
   },
   insertArticle(knex, newArticle) {
