@@ -25,15 +25,20 @@ describe(`Articles service object:`, function() {
       content: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Possimus, voluptate? Necessitatibus, reiciendis? Cupiditate totam laborum esse animi ratione ipsa dignissimos laboriosam eos similique cumque. Est nostrum esse porro id quaerat.'
     }
   ]
-    
+
+  // define the database connection (via knex)
   before(() => {
     db = knex({
       client: 'pg',
       connection: process.env.TEST_DB_URL,
     })
   })
+
+  // truncate (clear) the table to have a fresh start every time
   before(() => db('blogful_articles').truncate())
   afterEach(() => db('blogful_articles').truncate())
+
+  // disconnect from the database at the end of all the tests
   after(() => db.destroy());
   
   /* ARTICLE HAS DATA */
