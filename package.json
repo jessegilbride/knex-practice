@@ -10,7 +10,7 @@
     "deploy": "git push heroku main"
   },
   "keywords": [],
-  "author": "",
+  "author": "Jesse Gilbride",
   "license": "ISC",
   "dependencies": {
     "cors": "^2.8.5",
