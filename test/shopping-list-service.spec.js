@@ -72,6 +72,7 @@ describe(`Shopping List Service Object:`, function () {
 
     it(`getAllItems() gets all the items from shopping_list table`, () => {
       return ShoppingListService.getAllItems(db).then((actual) => {
+        // console.log(actual)
         expect(actual).to.deep.equal(testItems);
       });
     });
@@ -129,14 +130,17 @@ describe(`Shopping List Service Object:`, function () {
         });
     });
 
-    it.only('deleteItem() deletes an item from the shopping_list table', () => {
-      const id = 3;
+    it('deleteItem() deletes an item from the shopping_list table', () => {
+      const id = 2;
       const deletionIndex = testItems.findIndex(itemToDelete => itemToDelete.id === id);
-      const expected = testItems.splice(deletionIndex, 1);
+      const testItemsCopy = testItems.slice(); // make a shallow copy
+      // const deletedItem = testItemsCopy.splice(deletionIndex, 1); // for use in case of need to compare what's been deleted
+      testItemsCopy.splice(deletionIndex, 1);
+      // console.log(testItemsCopy);
       return ShoppingListService.deleteItem(db, id)
         .then(actual => {
           // console.log(actual);
-          expect(actual).to.deep.equal(expected)
+          expect(actual).to.deep.equal(testItemsCopy)
         })
     })
   });
@@ -158,13 +162,7 @@ describe(`Shopping List Service Object:`, function () {
         date_added: new Date()
       };
       return ShoppingListService.addItem(db, newItemData)
-        // .then((result) => {
-        //   console.log("the result is...")
-        //   console.log(result);
-        //   return result
-        // })
         .then((actual) => {
-          // console.log(actual);
           expect(actual).to.deep.equal(newItemData);
         });
     });
