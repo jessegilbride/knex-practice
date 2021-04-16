@@ -1,3 +1,5 @@
+-- psql -U dunder_mifflin -d knex-practice -f ./blogful-scripts/seed.blogful.sql
+
 INSERT into blogful_articles (title, content, date_published)
 VALUES
   ('blog post 1',   '1 ... Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Sed posuere consectetur est at lobortis.', now() - '1 days'::INTERVAL),

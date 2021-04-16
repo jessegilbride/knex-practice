@@ -1,3 +1,7 @@
+-- CREATE TABLE:
+-- psql -U dunder_mifflin -d knex-practice-test -f ./sql-scripts/create.shopping-list.sql
+
+
 -- Create a new TYPE called grocery.
 DROP TYPE IF EXISTS grocery;
 CREATE TYPE grocery AS ENUM (

@@ -1,3 +1,5 @@
+-- psql -U dunder_mifflin -d knex-practice-test -f ./sql-scripts/seed.whopipe-and-amazong.sql
+
 BEGIN;
 
 INSERT INTO whopipe_video_views
