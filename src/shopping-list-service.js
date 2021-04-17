@@ -54,7 +54,7 @@ const ShoppingListService = {
         const item = deletedItem[0];
         return { ...item, price: Number(item.price) }
       })
-      // [NOTE] This is the version I created, but in order to use the database delete() method, the other is used instead
+      // [NOTE] This is the original version created, but in order to use the database delete() method, the other is used instead
       // .select('*')
       // .then(listItems => {
       //   const itemToDeleteIndex = listItems.findIndex(itemToDelete => itemToDelete.id === id);

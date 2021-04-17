@@ -130,7 +130,7 @@ describe(`Shopping List Service Object:`, function () {
         });
     });
 
-    // [NOTE] This is the version I created, but in order to use the database delete() method, the other is used instead
+    // [NOTE] This is the original version created, but in order to use the database delete() method, the other is used instead
     /* it('deleteItem() deletes an item from the shopping_list table', () => {
       const id = 2;
       const deletionIndex = testItems.findIndex(itemToDelete => itemToDelete.id === id);
