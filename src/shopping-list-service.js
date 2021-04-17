@@ -8,13 +8,8 @@ const ShoppingListService = {
       knex
         .select('*')
         .from('shopping_list')
-        // .then((result) => {
-        //   console.log(result)
-        //   return result;
-        // })
         .then((result) => {
           return result.map((row) => {
-            // console.log(row);
             return { ...row, price: Number(row.price) };
           });
         })
@@ -35,33 +30,40 @@ const ShoppingListService = {
   },
   addItem(knex, newItem) {
     return knex
-      .returning('*')
       .insert(newItem)
       .into('shopping_list')
+      .returning('*')
       .then((rows) => {
         return rows[0]
       })
       .then((result) => {
-        // console.log(result);
         return { ...result, price: Number(result.price) };
       });
   },
   deleteItem(knex, id) {
     return knex
       .from('shopping_list')
-      .select('*')
-      .then(listItems => {
-        const itemToDeleteIndex = listItems.findIndex(itemToDelete => itemToDelete.id === id);
-        listItems.splice(itemToDeleteIndex, 1);
-        // const deletedItem = listItems.splice(itemToDeleteIndex, 1); // for use in case of need to compare what's been deleted
-        // console.log(deletedItem);
-        // return {listItems, deletedItem};
-
-
-        return listItems.map(row => {
-          return { ...row, price: Number(row.price) }
-        })
+      .where({ id })
+      .delete()
+      .returning('*')
+      /* .then(result => {
+        console.log(result)
+        return result
+      }) */
+      .then(deletedItem => {
+        const item = deletedItem[0];
+        return { ...item, price: Number(item.price) }
       })
+      // [NOTE] This is the version I created, but in order to use the database delete() method, the other is used instead
+      // .select('*')
+      // .then(listItems => {
+      //   const itemToDeleteIndex = listItems.findIndex(itemToDelete => itemToDelete.id === id);
+      //   listItems.splice(itemToDeleteIndex, 1);
+      //   // const deletedItem = listItems.splice(itemToDeleteIndex, 1); // for use in case of need to compare what's been deleted
+      //   return listItems.map(row => {
+      //     return { ...row, price: Number(row.price) }
+      //   })
+      // })
   }
 };
 

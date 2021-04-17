@@ -130,19 +130,32 @@ describe(`Shopping List Service Object:`, function () {
         });
     });
 
-    it('deleteItem() deletes an item from the shopping_list table', () => {
+    // [NOTE] This is the version I created, but in order to use the database delete() method, the other is used instead
+    /* it('deleteItem() deletes an item from the shopping_list table', () => {
       const id = 2;
       const deletionIndex = testItems.findIndex(itemToDelete => itemToDelete.id === id);
       const testItemsCopy = testItems.slice(); // make a shallow copy
       // const deletedItem = testItemsCopy.splice(deletionIndex, 1); // for use in case of need to compare what's been deleted
       testItemsCopy.splice(deletionIndex, 1);
-      // console.log(testItemsCopy);
       return ShoppingListService.deleteItem(db, id)
         .then(actual => {
-          // console.log(actual);
+          console.log(actual)
           expect(actual).to.deep.equal(testItemsCopy)
         })
+    }) */
+    
+    it.only('deleteItem() deletes an item from the shopping_list table', () => {
+      const id = 3;
+      const deletionIndex = testItems.findIndex(itemToDelete => itemToDelete.id === id);
+      const testItemsCopy = testItems.slice(); // make a shallow copy
+      const deletedItem = testItemsCopy.splice(deletionIndex, 1);
+      const deletedItem_expected = deletedItem[0]; // extract object from array
+      return ShoppingListService.deleteItem(db, id)
+        .then(deletedItem_actual => {
+          expect(deletedItem_actual).to.deep.equal(deletedItem_expected)
+        })
     })
+
   });
 
   context(`Given that shopping_list has no items (no data)...`, () => {
